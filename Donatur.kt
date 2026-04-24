@@ -1,19 +1,24 @@
-class KampanyeDonasi(val judul: String, val target: Double) {
-    var danaTerkumpul: Double = 0.0
+class Donatur(val nama: String, saldoAwal: Double) {
+    var saldo: Double = saldoAwal
         private set
 
-    fun terimaDonasi(nominal: Double): Boolean {
-        if (danaTerkumpul + nominal > target) {
-            println("❌ Gagal: donasi melebihi target kampanye")
-            return false
+    fun donasi(kampanye: KampanyeDonasi, nominal: Double) {
+        println("\n$nama mencoba donasi Rp$nominal")
+
+        if (nominal <= 0) {
+            println("❌ Gagal: nominal tidak valid")
+            return
         }
 
-        danaTerkumpul += nominal
-        println("Total dana sekarang: Rp$danaTerkumpul")
-        return true
-    }
+        if (saldo < nominal) {
+            println("❌ Gagal: saldo tidak cukup (saldo: Rp$saldo)")
+            return
+        }
 
-    fun sisaTarget(): Double {
-        return target - danaTerkumpul
+        if (kampanye.terimaDonasi(nominal)) {
+            saldo -= nominal
+            println("✅ Donasi berhasil")
+            println("Sisa saldo $nama: Rp$saldo")
+        }
     }
 }
