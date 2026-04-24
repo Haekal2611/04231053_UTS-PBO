@@ -1,0 +1,1 @@
+class Pengelola(val nama: String)
